@@ -1,19 +1,38 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
+	"log/slog"
+	"os"
+
+	"github.com/vkrishna03/go-bkd-init/internal/config"
+	"github.com/vkrishna03/go-bkd-init/internal/database"
+	"github.com/vkrishna03/go-bkd-init/internal/modules/user"
+	"github.com/vkrishna03/go-bkd-init/internal/server"
 )
 
 func main() {
-	r := gin.Default()
+	// Config
+	cfg := config.Load()
 
-	r.GET("/ping", func(c *gin.Context) {
-		c.String(200, "pong\n")
-	})
+	// Database
+	db, err := database.Connect(&cfg.Database)
+	if err != nil {
+		slog.Error("failed to connect to database", "error", err)
+		os.Exit(1)
+	}
+	defer db.Close()
+	slog.Info("connected to database")
 
-	r.GET("/health", func(c *gin.Context) {
-		c.JSON(200, gin.H{"health": "ok"})
-	})
+	// Server
+	srv := server.New(cfg)
 
-	r.Run(":3000")
+	// Module routes
+	api := srv.Router().Group("/api/v1")
+	user.Setup(api, db)
+
+	// Run
+	if err := srv.Run(); err != nil {
+		slog.Error("server error", "error", err)
+		os.Exit(1)
+	}
 }
