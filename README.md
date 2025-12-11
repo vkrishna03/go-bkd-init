@@ -4,6 +4,17 @@ Production-ready Go backend starter.
 
 ## Quick Start
 
+**Use as starter template:**
+```bash
+git clone https://github.com/vkrishna03/go-bkd-init myproject
+cd myproject
+rm -rf .git && git init
+make init name=github.com/yourusername/myproject
+cp .env.example .env
+make dev
+```
+
+**Or just run:**
 ```bash
 cp .env.example .env
 make docker-up      # or: make dev (DB in docker, app locally)
@@ -203,6 +214,10 @@ make sqlc         # Regenerate sqlc
 make migrate-up   # Run migrations
 make migrate-down # Rollback one migration
 make migrate-create # Create new migration
+
+# Project setup
+make init name=github.com/user/project  # Rename module + imports
+make tidy         # go mod tidy
 ```
 
 ## Deployment

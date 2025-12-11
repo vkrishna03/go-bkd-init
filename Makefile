@@ -73,3 +73,18 @@ sqlc:
 
 tidy:
 	go mod tidy
+
+# === Project Init ===
+
+# Initialize new project from this starter
+# Usage: make init name=github.com/username/myproject
+init:
+	@if [ -z "$(name)" ]; then echo "Usage: make init name=github.com/username/project"; exit 1; fi
+	@echo "Renaming project to $(name)..."
+	@# Update go.mod
+	@sed -i '' 's|github.com/vkrishna03/go-bkd-init|$(name)|g' go.mod
+	@# Update all Go imports
+	@find . -name "*.go" -type f -exec sed -i '' 's|github.com/vkrishna03/go-bkd-init|$(name)|g' {} +
+	@# Update docker image name in Makefile
+	@sed -i '' 's|go-bkd|$(shell basename $(name))|g' Makefile
+	@echo "Done! Run 'go mod tidy' to verify."

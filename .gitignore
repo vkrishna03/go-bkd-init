@@ -20,3 +20,4 @@ bin/
 coverage.out
 
 .env
+schema.dbml
