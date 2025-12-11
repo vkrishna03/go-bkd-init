@@ -4,10 +4,10 @@ import (
 	"log/slog"
 	"os"
 
-	"github.com/vkrishna03/go-bkd-init/internal/config"
-	"github.com/vkrishna03/go-bkd-init/internal/database"
-	"github.com/vkrishna03/go-bkd-init/internal/modules/user"
-	"github.com/vkrishna03/go-bkd-init/internal/server"
+	"github.com/vkrishna03/streamz/internal/config"
+	"github.com/vkrishna03/streamz/internal/database"
+	"github.com/vkrishna03/streamz/internal/modules/user"
+	"github.com/vkrishna03/streamz/internal/server"
 )
 
 func main() {

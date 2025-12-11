@@ -4,8 +4,8 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/vkrishna03/go-bkd-init/db/sqlc"
-	apperr "github.com/vkrishna03/go-bkd-init/internal/errors"
+	"github.com/vkrishna03/streamz/db/sqlc"
+	apperr "github.com/vkrishna03/streamz/internal/errors"
 )
 
 type Service struct {

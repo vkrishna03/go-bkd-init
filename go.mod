@@ -1,4 +1,4 @@
-module github.com/vkrishna03/go-bkd-init
+module github.com/vkrishna03/streamz
 
 go 1.24.4
 

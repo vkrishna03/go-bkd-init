@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	apperr "github.com/vkrishna03/go-bkd-init/internal/errors"
+	apperr "github.com/vkrishna03/streamz/internal/errors"
 )
 
 type Handler struct {

@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/vkrishna03/go-bkd-init/db/sqlc"
+	"github.com/vkrishna03/streamz/db/sqlc"
 )
 
 type Repository struct {

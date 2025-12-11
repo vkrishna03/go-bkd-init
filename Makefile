@@ -50,7 +50,7 @@ docker-down:
 
 # Build production image (app only, no db)
 docker-build:
-	docker build -t go-bkd .
+	docker build -t streamz .
 
 # === Database ===
 
@@ -82,9 +82,9 @@ init:
 	@if [ -z "$(name)" ]; then echo "Usage: make init name=github.com/username/project"; exit 1; fi
 	@echo "Renaming project to $(name)..."
 	@# Update go.mod
-	@sed -i '' 's|github.com/vkrishna03/go-bkd-init|$(name)|g' go.mod
+	@sed -i '' 's|github.com/vkrishna03/streamz-init|$(name)|g' go.mod
 	@# Update all Go imports
-	@find . -name "*.go" -type f -exec sed -i '' 's|github.com/vkrishna03/go-bkd-init|$(name)|g' {} +
+	@find . -name "*.go" -type f -exec sed -i '' 's|github.com/vkrishna03/streamz-init|$(name)|g' {} +
 	@# Update docker image name in Makefile
-	@sed -i '' 's|go-bkd|$(shell basename $(name))|g' Makefile
+	@sed -i '' 's|streamz|$(shell basename $(name))|g' Makefile
 	@echo "Done! Run 'go mod tidy' to verify."

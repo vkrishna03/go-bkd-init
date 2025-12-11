@@ -8,7 +8,7 @@ import (
 
 	_ "github.com/jackc/pgx/v5/stdlib"
 
-	"github.com/vkrishna03/go-bkd-init/internal/config"
+	"github.com/vkrishna03/streamz/internal/config"
 )
 
 func Connect(cfg *config.DatabaseConfig) (*sql.DB, error) {

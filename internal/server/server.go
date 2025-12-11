@@ -11,8 +11,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/vkrishna03/go-bkd-init/internal/config"
-	"github.com/vkrishna03/go-bkd-init/internal/middleware"
+	"github.com/vkrishna03/streamz/internal/config"
+	"github.com/vkrishna03/streamz/internal/middleware"
 )
 
 type Server struct {

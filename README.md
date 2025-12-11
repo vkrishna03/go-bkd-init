@@ -1,23 +1,12 @@
-# go-bkd
+# StreamZ
 
-Production-ready Go backend starter.
+Video streaming platform backend.
 
 ## Quick Start
 
-**Use as starter template:**
-```bash
-git clone https://github.com/vkrishna03/go-bkd-init myproject
-cd myproject
-rm -rf .git && git init
-make init name=github.com/yourusername/myproject
-cp .env.example .env
-make dev
-```
-
-**Or just run:**
 ```bash
 cp .env.example .env
-make docker-up      # or: make dev (DB in docker, app locally)
+make dev            # Start DB + run app
 ```
 
 ## Tech Stack
