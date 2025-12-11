@@ -12,6 +12,7 @@ import (
 	"github.com/vkrishna03/streamz/internal/modules/auth"
 	"github.com/vkrishna03/streamz/internal/modules/device"
 	"github.com/vkrishna03/streamz/internal/modules/stream"
+	"github.com/vkrishna03/streamz/internal/modules/webrtc"
 	"github.com/vkrishna03/streamz/internal/modules/ws"
 	"github.com/vkrishna03/streamz/internal/server"
 )
@@ -56,6 +57,9 @@ func main() {
 
 	// Stream module (protected routes)
 	stream.Setup(api, db, cfg.JWT.Secret)
+
+	// WebRTC module (ICE server config)
+	webrtc.Setup(api, cfg.ICE, cfg.JWT.Secret)
 
 	// Graceful shutdown
 	go func() {

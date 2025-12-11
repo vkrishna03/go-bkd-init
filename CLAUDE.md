@@ -16,7 +16,7 @@ Browser-based device streaming platform for solo content creators. Stream from p
 streamz/
 ├── cmd/app/main.go
 ├── internal/
-│   ├── modules/          # auth, device, stream, ws
+│   ├── modules/          # auth, device, stream, webrtc, ws
 │   ├── middleware/
 │   ├── database/
 │   ├── config/
@@ -49,6 +49,9 @@ GET|POST /api/v1/streams
 GET /api/v1/streams/active
 GET|DELETE /api/v1/streams/:id
 PUT /api/v1/streams/:id/status|latency|connection-type
+
+# WebRTC (protected)
+GET /api/v1/webrtc/ice-servers
 
 # WebSocket (protected)
 WS /ws?device_id=<uuid>

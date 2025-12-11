@@ -29,7 +29,8 @@
 - [x] Stream type selection (video/audio/both)
 - [x] Stream quality selection (low/medium/high/auto)
 - [ ] P2P WebRTC connection (Pion library)
-- [ ] Relay fallback mechanism (TURN server)
+- [x] TURN/STUN server configuration (OpenRelay dev, Metered.ca prod)
+- [x] ICE servers endpoint (/api/v1/webrtc/ice-servers)
 - [ ] Real-time stream preview
 - [x] Stop streaming
 - [x] Connection quality tracking (latency, connection type)

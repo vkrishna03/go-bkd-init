@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/joho/godotenv"
@@ -13,6 +14,7 @@ type Config struct {
 	Server   ServerConfig
 	Database DatabaseConfig
 	JWT      JWTConfig
+	ICE      ICEConfig
 }
 
 type ServerConfig struct {
@@ -34,6 +36,13 @@ type JWTConfig struct {
 	Expiry           time.Duration
 	RefreshExpiry    time.Duration
 	PasswordResetExp time.Duration
+}
+
+type ICEConfig struct {
+	STUNServers    []string
+	TURNServers    []string
+	TURNUsername   string
+	TURNCredential string
 }
 
 func (d *DatabaseConfig) DSN() string {
@@ -66,6 +75,19 @@ func Load() *Config {
 			RefreshExpiry:    getEnvDuration("JWT_REFRESH_EXPIRY", 7*24*time.Hour),
 			PasswordResetExp: getEnvDuration("PASSWORD_RESET_EXPIRY", 1*time.Hour),
 		},
+		ICE: ICEConfig{
+			STUNServers: getEnvSlice("ICE_STUN_SERVERS", []string{
+				"stun:stun.l.google.com:19302",
+				"stun:openrelay.metered.ca:80",
+			}),
+			TURNServers: getEnvSlice("ICE_TURN_SERVERS", []string{
+				"turn:openrelay.metered.ca:80",
+				"turn:openrelay.metered.ca:443",
+				"turn:openrelay.metered.ca:443?transport=tcp",
+			}),
+			TURNUsername:   getEnv("ICE_TURN_USERNAME", "openrelayproject"),
+			TURNCredential: getEnv("ICE_TURN_CREDENTIAL", "openrelayproject"),
+		},
 	}
 }
 
@@ -90,6 +112,13 @@ func getEnvDuration(key string, fallback time.Duration) time.Duration {
 		if d, err := time.ParseDuration(val); err == nil {
 			return d
 		}
+	}
+	return fallback
+}
+
+func getEnvSlice(key string, fallback []string) []string {
+	if val := os.Getenv(key); val != "" {
+		return strings.Split(val, ",")
 	}
 	return fallback
 }
