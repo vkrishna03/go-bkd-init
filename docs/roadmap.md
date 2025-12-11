@@ -1,36 +1,38 @@
 # Streamz Roadmap & Progress
 
-## MVP Status: Pre-development
+## MVP Status: Backend API Complete
 
 ---
 
 ## MVP Feature Checklist
 
 ### Authentication
-- [ ] Email/password registration
+- [x] Email/password registration
 - [ ] Email verification (optional for MVP)
-- [ ] Login with JWT
-- [ ] JWT refresh tokens
-- [ ] Logout
-- [ ] Session persistence
+- [x] Login with JWT
+- [x] JWT refresh tokens
+- [x] Logout
+- [x] Session persistence
+- [x] Password reset flow
 
 ### Device Management
-- [ ] Auto-register device on login
+- [x] Register device via API
 - [ ] Device list with real-time status (via WebSocket)
-- [ ] Device naming
-- [ ] Device removal
-- [ ] Online/offline status tracking
-- [ ] Heartbeat mechanism (30-second ping)
+- [x] Device naming
+- [x] Device removal
+- [x] Online/offline status tracking
+- [x] Heartbeat mechanism
+- [x] Device capability tracking (camera/mic)
 
 ### Streaming
-- [ ] Start video stream (camera access)
-- [ ] Start audio stream (microphone access)
-- [ ] Start video + audio stream
+- [x] Stream session management (start/end)
+- [x] Stream type selection (video/audio/both)
+- [x] Stream quality selection (low/medium/high/auto)
 - [ ] P2P WebRTC connection (Pion library)
 - [ ] Relay fallback mechanism (TURN server)
 - [ ] Real-time stream preview
-- [ ] Stop streaming
-- [ ] Connection quality indicator
+- [x] Stop streaming
+- [x] Connection quality tracking (latency, connection type)
 
 ### WebRTC Signaling
 - [ ] SDP offer/answer exchange
@@ -40,12 +42,12 @@
 - [ ] Graceful disconnect handling
 
 ### Security
-- [ ] Password hashing with bcrypt
+- [x] Password hashing with bcrypt
 - [ ] HTTPS/WSS support
-- [ ] JWT token validation
-- [ ] CORS configuration
-- [ ] Input validation and sanitization
-- [ ] SQL injection prevention (parameterized queries via sqlc)
+- [x] JWT token validation
+- [x] CORS configuration
+- [x] Input validation and sanitization
+- [x] SQL injection prevention (parameterized queries via sqlc)
 
 ---
 

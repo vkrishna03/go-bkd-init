@@ -34,10 +34,23 @@ streamz/
 ## API
 
 ```
-POST /api/auth/register|login|refresh
-GET|POST /api/devices
-PUT|DELETE /api/devices/:id
-WS /ws
+# Auth (public)
+POST /api/v1/auth/register|login|refresh|logout
+POST /api/v1/auth/forgot-password|reset-password
+
+# Devices (protected)
+GET|POST /api/v1/devices
+GET|PUT|DELETE /api/v1/devices/:id
+PUT /api/v1/devices/:id/status
+POST /api/v1/devices/:id/heartbeat
+
+# Streams (protected)
+GET|POST /api/v1/streams
+GET /api/v1/streams/active
+GET|DELETE /api/v1/streams/:id
+PUT /api/v1/streams/:id/status|latency|connection-type
+
+# Health
 GET /health, /ping
 ```
 

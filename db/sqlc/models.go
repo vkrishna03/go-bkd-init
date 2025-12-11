@@ -6,11 +6,294 @@ package sqlc
 
 import (
 	"database/sql"
+	"database/sql/driver"
+	"fmt"
+	"time"
+
+	"github.com/google/uuid"
 )
 
-type User struct {
-	ID        int32
-	Name      string
-	Email     string
+type ConnectionType string
+
+const (
+	ConnectionTypeP2p   ConnectionType = "p2p"
+	ConnectionTypeRelay ConnectionType = "relay"
+)
+
+func (e *ConnectionType) Scan(src interface{}) error {
+	switch s := src.(type) {
+	case []byte:
+		*e = ConnectionType(s)
+	case string:
+		*e = ConnectionType(s)
+	default:
+		return fmt.Errorf("unsupported scan type for ConnectionType: %T", src)
+	}
+	return nil
+}
+
+type NullConnectionType struct {
+	ConnectionType ConnectionType
+	Valid          bool // Valid is true if ConnectionType is not NULL
+}
+
+// Scan implements the Scanner interface.
+func (ns *NullConnectionType) Scan(value interface{}) error {
+	if value == nil {
+		ns.ConnectionType, ns.Valid = "", false
+		return nil
+	}
+	ns.Valid = true
+	return ns.ConnectionType.Scan(value)
+}
+
+// Value implements the driver Valuer interface.
+func (ns NullConnectionType) Value() (driver.Value, error) {
+	if !ns.Valid {
+		return nil, nil
+	}
+	return string(ns.ConnectionType), nil
+}
+
+type DeviceType string
+
+const (
+	DeviceTypePhone   DeviceType = "phone"
+	DeviceTypeTablet  DeviceType = "tablet"
+	DeviceTypeDesktop DeviceType = "desktop"
+)
+
+func (e *DeviceType) Scan(src interface{}) error {
+	switch s := src.(type) {
+	case []byte:
+		*e = DeviceType(s)
+	case string:
+		*e = DeviceType(s)
+	default:
+		return fmt.Errorf("unsupported scan type for DeviceType: %T", src)
+	}
+	return nil
+}
+
+type NullDeviceType struct {
+	DeviceType DeviceType
+	Valid      bool // Valid is true if DeviceType is not NULL
+}
+
+// Scan implements the Scanner interface.
+func (ns *NullDeviceType) Scan(value interface{}) error {
+	if value == nil {
+		ns.DeviceType, ns.Valid = "", false
+		return nil
+	}
+	ns.Valid = true
+	return ns.DeviceType.Scan(value)
+}
+
+// Value implements the driver Valuer interface.
+func (ns NullDeviceType) Value() (driver.Value, error) {
+	if !ns.Valid {
+		return nil, nil
+	}
+	return string(ns.DeviceType), nil
+}
+
+type StreamQuality string
+
+const (
+	StreamQualityLow    StreamQuality = "low"
+	StreamQualityMedium StreamQuality = "medium"
+	StreamQualityHigh   StreamQuality = "high"
+	StreamQualityAuto   StreamQuality = "auto"
+)
+
+func (e *StreamQuality) Scan(src interface{}) error {
+	switch s := src.(type) {
+	case []byte:
+		*e = StreamQuality(s)
+	case string:
+		*e = StreamQuality(s)
+	default:
+		return fmt.Errorf("unsupported scan type for StreamQuality: %T", src)
+	}
+	return nil
+}
+
+type NullStreamQuality struct {
+	StreamQuality StreamQuality
+	Valid         bool // Valid is true if StreamQuality is not NULL
+}
+
+// Scan implements the Scanner interface.
+func (ns *NullStreamQuality) Scan(value interface{}) error {
+	if value == nil {
+		ns.StreamQuality, ns.Valid = "", false
+		return nil
+	}
+	ns.Valid = true
+	return ns.StreamQuality.Scan(value)
+}
+
+// Value implements the driver Valuer interface.
+func (ns NullStreamQuality) Value() (driver.Value, error) {
+	if !ns.Valid {
+		return nil, nil
+	}
+	return string(ns.StreamQuality), nil
+}
+
+type StreamStatus string
+
+const (
+	StreamStatusConnecting StreamStatus = "connecting"
+	StreamStatusActive     StreamStatus = "active"
+	StreamStatusPaused     StreamStatus = "paused"
+	StreamStatusEnded      StreamStatus = "ended"
+	StreamStatusFailed     StreamStatus = "failed"
+)
+
+func (e *StreamStatus) Scan(src interface{}) error {
+	switch s := src.(type) {
+	case []byte:
+		*e = StreamStatus(s)
+	case string:
+		*e = StreamStatus(s)
+	default:
+		return fmt.Errorf("unsupported scan type for StreamStatus: %T", src)
+	}
+	return nil
+}
+
+type NullStreamStatus struct {
+	StreamStatus StreamStatus
+	Valid        bool // Valid is true if StreamStatus is not NULL
+}
+
+// Scan implements the Scanner interface.
+func (ns *NullStreamStatus) Scan(value interface{}) error {
+	if value == nil {
+		ns.StreamStatus, ns.Valid = "", false
+		return nil
+	}
+	ns.Valid = true
+	return ns.StreamStatus.Scan(value)
+}
+
+// Value implements the driver Valuer interface.
+func (ns NullStreamStatus) Value() (driver.Value, error) {
+	if !ns.Valid {
+		return nil, nil
+	}
+	return string(ns.StreamStatus), nil
+}
+
+type StreamType string
+
+const (
+	StreamTypeVideo StreamType = "video"
+	StreamTypeAudio StreamType = "audio"
+	StreamTypeBoth  StreamType = "both"
+)
+
+func (e *StreamType) Scan(src interface{}) error {
+	switch s := src.(type) {
+	case []byte:
+		*e = StreamType(s)
+	case string:
+		*e = StreamType(s)
+	default:
+		return fmt.Errorf("unsupported scan type for StreamType: %T", src)
+	}
+	return nil
+}
+
+type NullStreamType struct {
+	StreamType StreamType
+	Valid      bool // Valid is true if StreamType is not NULL
+}
+
+// Scan implements the Scanner interface.
+func (ns *NullStreamType) Scan(value interface{}) error {
+	if value == nil {
+		ns.StreamType, ns.Valid = "", false
+		return nil
+	}
+	ns.Valid = true
+	return ns.StreamType.Scan(value)
+}
+
+// Value implements the driver Valuer interface.
+func (ns NullStreamType) Value() (driver.Value, error) {
+	if !ns.Valid {
+		return nil, nil
+	}
+	return string(ns.StreamType), nil
+}
+
+type Device struct {
+	ID            uuid.UUID
+	UserID        uuid.UUID
+	DeviceID      string
+	DeviceName    string
+	DeviceType    DeviceType
+	HasCamera     sql.NullBool
+	HasMicrophone sql.NullBool
+	IsOnline      sql.NullBool
+	LastSeen      sql.NullTime
+	CreatedAt     sql.NullTime
+}
+
+type PasswordReset struct {
+	ID        uuid.UUID
+	UserID    uuid.UUID
+	Token     string
+	ExpiresAt time.Time
+	UsedAt    sql.NullTime
 	CreatedAt sql.NullTime
+}
+
+type Session struct {
+	ID           uuid.UUID
+	UserID       uuid.UUID
+	DeviceID     uuid.NullUUID
+	RefreshToken string
+	ExpiresAt    time.Time
+	CreatedAt    sql.NullTime
+}
+
+type Stream struct {
+	ID             uuid.UUID
+	UserID         uuid.UUID
+	SourceDeviceID uuid.NullUUID
+	TargetDeviceID uuid.NullUUID
+	StreamType     StreamType
+	Status         NullStreamStatus
+	ConnectionType NullConnectionType
+	Quality        NullStreamQuality
+	LatencyMs      sql.NullInt32
+	StartedAt      sql.NullTime
+	EndedAt        sql.NullTime
+}
+
+type User struct {
+	ID           uuid.UUID
+	Email        string
+	PasswordHash string
+	FirstName    sql.NullString
+	LastName     sql.NullString
+	CreatedAt    sql.NullTime
+	UpdatedAt    sql.NullTime
+}
+
+type UserSetting struct {
+	ID                   uuid.UUID
+	UserID               uuid.UUID
+	MaxDevices           sql.NullInt32
+	MaxConcurrentStreams sql.NullInt32
+	TotalStreamMinutes   sql.NullInt32
+	TotalStreamsCount    sql.NullInt32
+	DefaultStreamQuality NullStreamQuality
+	DefaultStreamType    NullStreamType
+	CreatedAt            sql.NullTime
+	UpdatedAt            sql.NullTime
 }
