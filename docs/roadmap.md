@@ -1,6 +1,6 @@
 # Streamz Roadmap & Progress
 
-## MVP Status: Backend API Complete
+## MVP Status: Backend + WebSocket Complete
 
 ---
 
@@ -17,7 +17,7 @@
 
 ### Device Management
 - [x] Register device via API
-- [ ] Device list with real-time status (via WebSocket)
+- [x] Device list with real-time status (via WebSocket)
 - [x] Device naming
 - [x] Device removal
 - [x] Online/offline status tracking
@@ -35,11 +35,11 @@
 - [x] Connection quality tracking (latency, connection type)
 
 ### WebRTC Signaling
-- [ ] SDP offer/answer exchange
-- [ ] ICE candidate forwarding
-- [ ] Connection state management
-- [ ] Error handling for failed connections
-- [ ] Graceful disconnect handling
+- [x] SDP offer/answer exchange
+- [x] ICE candidate forwarding
+- [x] Connection state management
+- [x] Error handling for failed connections
+- [x] Graceful disconnect handling
 
 ### Security
 - [x] Password hashing with bcrypt

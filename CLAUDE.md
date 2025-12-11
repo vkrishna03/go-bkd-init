@@ -50,8 +50,33 @@ GET /api/v1/streams/active
 GET|DELETE /api/v1/streams/:id
 PUT /api/v1/streams/:id/status|latency|connection-type
 
+# WebSocket (protected)
+WS /ws?device_id=<uuid>
+
 # Health
 GET /health, /ping
+```
+
+## WebSocket Events
+
+```
+# Device events
+device:online   - Device came online
+device:offline  - Device went offline
+device:list     - List of online devices (sent on connect)
+
+# Stream events
+stream:start    - Stream started
+stream:end      - Stream ended
+
+# WebRTC signaling
+webrtc:offer    - SDP offer
+webrtc:answer   - SDP answer
+webrtc:candidate - ICE candidate
+
+# Control
+ping/pong       - Heartbeat
+error           - Error message
 ```
 
 ## Key Files
